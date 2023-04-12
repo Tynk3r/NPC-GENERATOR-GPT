@@ -1,20 +1,25 @@
 import os
 import openai
+
 openai.api_key = os.getenv("OPENAI_API_KEY")
 
-if __name__ == "__main__":
-    messagesArr = []
+def main():
+    messages_arr = []
+    model_name = "gpt-3.5-turbo"
 
-    while True :
+    while True:
         prompt = input("> ")
-
-        messagesArr.append({"role": "user", "content": prompt})
+        messages_arr.append({"role": "user", "content": prompt})
 
         completion = openai.ChatCompletion.create(
-          model="gpt-3.5-turbo",
-          messages=messagesArr
+            model=model_name,
+            messages=messages_arr
         )
 
-        messagesArr.append({"role": "assistant", "content": completion.choices[0].message.content})
+        assistant_message = completion.choices[0].message.content
+        messages_arr.append({"role": "assistant", "content": assistant_message})
 
-        print(completion.choices[0].message.content)
+        print(assistant_message)
+
+if __name__ == "__main__":
+    main()

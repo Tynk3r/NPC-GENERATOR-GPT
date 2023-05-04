@@ -9,6 +9,12 @@ def main():
 
     while True:
         prompt = input("> ")
+
+        if prompt == "reset":
+            messages_arr = []
+            os.system('cls')
+            continue
+
         messages_arr.append({"role": "user", "content": prompt})
 
         completion = openai.ChatCompletion.create(
@@ -19,7 +25,7 @@ def main():
         assistant_message = completion.choices[0].message.content
         messages_arr.append({"role": "assistant", "content": assistant_message})
 
-        print(assistant_message)
+        print("\nAssistant: " + assistant_message + "\n")
 
 if __name__ == "__main__":
     main()
